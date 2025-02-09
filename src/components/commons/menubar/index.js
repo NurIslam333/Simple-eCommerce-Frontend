@@ -57,7 +57,7 @@ export default function Menubar() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("https://ecom.example.com/api/categories");
+        const response = await fetch("https://ecom.nurislam.me/api/categories");
         const data = await response.json();
         setCategories(data);
       } catch (error) {
