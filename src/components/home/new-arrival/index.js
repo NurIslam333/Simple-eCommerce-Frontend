@@ -43,7 +43,6 @@ export default function NewArrival() {
                   {data.title}
                 </H4>
 
-                {/* Fallback to standard <img> if CustomImage fails */}
                 {data.image ? (
                   <CustomImage
                     src={data.image}

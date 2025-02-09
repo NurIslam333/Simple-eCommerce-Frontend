@@ -1,18 +1,11 @@
 "use client";
 
-import { CustomButton, CustomContainer, H4 } from "@/components/ui";
+import { useState, useEffect } from "react";
+import { CustomButton, CustomContainer, CustomHeader, CustomImage, H4, H5 } from "@/components/ui";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { FaBars, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { RiCloseLargeFill } from "react-icons/ri";
-
-import { usePathname } from "next/navigation";
-import {
-  FaBars,
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-} from "react-icons/fa";
+import { useRouter } from "next/router";
 
 const menuList = [
   {
@@ -56,10 +49,14 @@ const socialLink = [
 ];
 
 export default function Menubar() {
-  const path = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [categorySelected, setCategorySelected] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -74,6 +71,24 @@ export default function Menubar() {
 
     fetchCategories();
   }, []);
+
+  const handleCategorySelect = async (category) => {
+    setSelectedCategory(category);
+    setCategorySelected(true);
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `https://ecom.nurislam.me/api/products/category/${category}`
+      );
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleOpenMobileMenu = () => {
     setIsMobile(true);
@@ -112,21 +127,9 @@ export default function Menubar() {
                           <li
                             key={index}
                             className="px-4 py-2 hover:bg-gray-200"
+                            onClick={() => handleCategorySelect(category)}
                           >
-                            <Link
-                              href={`/category/${category
-                                .toLowerCase()
-                                .replace(/\s+/g, "-")}`}
-                              className={`text-sm laptop:text-base ${
-                                path.includes(
-                                  category.toLowerCase().replace(/\s+/g, "-")
-                                )
-                                  ? "text-cyan-color"
-                                  : "text-black"
-                              }`}
-                            >
-                              {category}
-                            </Link>
+                            {category}
                           </li>
                         ))
                       ) : (
@@ -141,9 +144,7 @@ export default function Menubar() {
                 <li key={menu.id}>
                   <Link
                     href={menu.url}
-                    className={`text-sm laptop:text-base ${
-                      path === menu.url ? "text-cyan-color" : "text-white"
-                    }`}
+                    className="text-sm laptop:text-base text-white"
                   >
                     {menu.name}
                   </Link>
@@ -185,21 +186,11 @@ export default function Menubar() {
 
                     {categories.length > 0 &&
                       categories.map((category, index) => (
-                        <li key={index}>
-                          <Link
-                            href={`/category/${category
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}`}
-                            className={`text-sm laptop:text-base ${
-                              path.includes(
-                                category.toLowerCase().replace(/\s+/g, "-")
-                              )
-                                ? "text-cyan-color"
-                                : "text-black"
-                            }`}
-                          >
-                            {category}
-                          </Link>
+                        <li
+                          key={index}
+                          onClick={() => handleCategorySelect(category)}
+                        >
+                          {category}
                         </li>
                       ))}
                   </ul>
@@ -209,7 +200,7 @@ export default function Menubar() {
           </div>
 
           {/* Social Links */}
-          <div className="">
+          <div className="text-white">
             <ul className="flex items-center gap-5">
               {socialLink.map((social) => (
                 <li key={social.id}>
@@ -225,6 +216,62 @@ export default function Menubar() {
           </div>
         </div>
       </CustomContainer>
+
+      {categorySelected && !loading && (
+        <section className="">
+         <CustomContainer>
+           <div className="mt-10 pt-10 border-t border-border-color">
+             <CustomHeader title1="Products in" title2={selectedCategory} />
+   
+             <div className="grid tab:grid-cols-4 laptop:grid-cols-5 gap-5">
+              {products.length > 0 ? (
+                products.map((product) => (
+                 <div
+                   className="bg-white shadow border border-border-color p-3 hover:shadow-lg"
+                   key={product.id}
+                 >
+                   <H5 className="text-xs line-clamp-1">{product.category}</H5>
+                   <H4 className="text-sm line-clamp-1 text-[#034E53] mb-2">
+                     {product.title}
+                   </H4>
+  
+                   {product.image ? (
+                     <CustomImage
+                       src={product.image}
+                       alt={product.title}
+                       width="450"
+                       height="450"
+                       className="w-full tab:h-[200px] !object-contain"
+                     />
+                   ) : (
+                     <img
+                       src={product.mage}
+                       alt={product.title}
+                       className="w-full"
+                       width="450"
+                       height="450"
+                     />
+                   )}
+   
+                   <div className="text-sm flex items-center gap-2 mt-2">
+                     <del className=" text-[#697475]">RS {product.oldPrice}</del>
+                     <span className="text-cyan-color text-base">
+                       RS {product.price}
+                     </span>
+                   </div>
+   
+                   <CustomButton className="w-full py-2 bg-cyan-color text-white hover:bg-dark-cyan-color mt-2">
+                     Add to cart
+                   </CustomButton>
+                 </div>
+               ))) : (
+                <div>No products available in this category.</div>
+              )}
+             </div>
+           </div>
+         </CustomContainer>
+       </section>
+      )}
     </nav>
   );
 }

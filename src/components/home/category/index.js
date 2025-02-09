@@ -2,7 +2,6 @@
 
 import { CustomContainer, CustomImage, H4 } from "@/components/ui";
 
-// Import Swiper React components
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
