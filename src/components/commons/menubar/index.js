@@ -76,6 +76,10 @@ export default function Menubar() {
     setIsMobile(false);
   };
 
+  const handleCategoryToggle = () => {
+    setIsCategoryOpen((prev) => !prev);
+  };
+
   return (
     <nav className="bg-dark-green-color">
       <CustomContainer>
@@ -85,28 +89,36 @@ export default function Menubar() {
             <ul className="flex items-center gap-3 laptop:gap-7">
               {/* Browse By Category */}
               <li>
-                <Link href="" className="flex items-center gap-2 text-base laptop:text-lg">
-                  <FaBars />
-                  Browse By Category
-                </Link>
-                <ul className="ml-6 mt-2">
-                  {categories.length > 0 ? (
-                    categories.map((category) => (
-                      <li key={category.id}>
-                        <Link
-                          href={`/category/${category.id}`}
-                          className={`text-sm laptop:text-base ${
-                            path.includes(category.id) ? "text-cyan-color" : "text-white"
-                          }`}
-                        >
-                          {category.name}
-                        </Link>
-                      </li>
-                    ))
-                  ) : (
-                    <li>Loading...</li>
+              <div className="relative">
+                  <CustomButton
+                    onClick={handleCategoryToggle}
+                    className="flex items-center gap-2 text-base laptop:text-lg"
+                  >
+                    <FaBars />
+                    Browse By Category
+                  </CustomButton>
+                  {/* Dropdown Menu */}
+                  {isCategoryOpen && (
+                    <ul className="absolute bg-white text-black py-2 mt-2 w-56 shadow-lg rounded-lg">
+                      {categories.length > 0 ? (
+                        categories.map((category) => (
+                          <li key={category.id} className="px-4 py-2 hover:bg-gray-200">
+                            <Link
+                              href={`/category/${category.id}`}
+                              className={`text-sm laptop:text-base ${
+                                path.includes(category.id) ? "text-cyan-color" : "text-black"
+                              }`}
+                            >
+                              {category.name}
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <li className="px-4 py-2">Loading...</li>
+                      )}
+                    </ul>
                   )}
-                </ul>
+                </div>
               </li>
 
               {menuList.map((menu) => (
@@ -141,28 +153,36 @@ export default function Menubar() {
 
                   <ul className="flex flex-col gap-3 laptop:gap-7 mt-10">
                     <li>
-                      <Link href="" className="flex items-center gap-2 text-base laptop:text-lg">
-                        <FaBars />
-                        Browse By Category
-                      </Link>
-                      <ul className="ml-6 mt-2">
-                        {categories.length > 0 ? (
-                          categories.map((category) => (
-                            <li key={category.id}>
-                              <Link
-                                href={`/category/${category.id}`}
-                                className={`text-sm laptop:text-base ${
-                                  path.includes(category.id) ? "text-cyan-color" : "text-black"
-                                }`}
-                              >
-                                {category.name}
-                              </Link>
-                            </li>
-                          ))
-                        ) : (
-                          <li>Loading...</li>
+                    <div className="relative">
+                        <CustomButton
+                          onClick={handleCategoryToggle}
+                          className="flex items-center gap-2 text-base laptop:text-lg"
+                        >
+                          <FaBars />
+                          Browse By Category
+                        </CustomButton>
+                        {/* Dropdown Menu */}
+                        {isCategoryOpen && (
+                          <ul className="absolute bg-white text-black py-2 mt-2 w-56 shadow-lg rounded-lg">
+                            {categories.length > 0 ? (
+                              categories.map((category) => (
+                                <li key={category.id} className="px-4 py-2 hover:bg-gray-200">
+                                  <Link
+                                    href={`/category/${category.id}`}
+                                    className={`text-sm laptop:text-base ${
+                                      path.includes(category.id) ? "text-cyan-color" : "text-black"
+                                    }`}
+                                  >
+                                    {category.name}
+                                  </Link>
+                                </li>
+                              ))
+                            ) : (
+                              <li className="px-4 py-2">Loading...</li>
+                            )}
+                          </ul>
                         )}
-                      </ul>
+                      </div>
                     </li>
 
                     {menuList.map((menu) => (
