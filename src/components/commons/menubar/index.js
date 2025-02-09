@@ -53,6 +53,7 @@ export default function Menubar() {
   const path = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
