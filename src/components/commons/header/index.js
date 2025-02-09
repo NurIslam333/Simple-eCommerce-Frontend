@@ -14,7 +14,7 @@ export default function Header() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/categories");
+        const response = await fetch("https://ecom.nurislam.me/api/categories");
         const data = await response.json();
         setCategories(data);
       } catch (error) {
