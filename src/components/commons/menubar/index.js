@@ -102,15 +102,17 @@ export default function Menubar() {
                   {isCategoryOpen && (
                     <ul className="absolute bg-white text-black py-2 mt-2 w-56 shadow-lg rounded-lg">
                       {categories.length > 0 ? (
-                        categories.map((category) => (
-                          <li key={category.id} className="px-4 py-2 hover:bg-gray-200">
+                        categories.map((category, index) => (
+                          <li key={index} className="px-4 py-2 hover:bg-gray-200">
                             <Link
-                              href={`/category/${category.id}`}
+                              href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
                               className={`text-sm laptop:text-base ${
-                                path.includes(category.id) ? "text-cyan-color" : "text-black"
+                                path.includes(category.toLowerCase().replace(/\s+/g, '-'))
+                                  ? "text-cyan-color"
+                                  : "text-black"
                               }`}
                             >
-                              {category.name}
+                              {category}
                             </Link>
                           </li>
                         ))
@@ -154,48 +156,30 @@ export default function Menubar() {
 
                   <ul className="flex flex-col gap-3 laptop:gap-7 mt-10">
                     <li>
-                    <div className="relative">
-                        <CustomButton
-                          onClick={handleCategoryToggle}
-                          className="flex items-center gap-2 text-base laptop:text-lg"
-                        >
-                          <FaBars />
-                          Browse By Category
-                        </CustomButton>
-                        {/* Dropdown Menu */}
-                        {isCategoryOpen && (
-                          <ul className="absolute bg-white text-black py-2 mt-2 w-56 shadow-lg rounded-lg">
-                            {categories.length > 0 ? (
-                              categories.map((category) => (
-                                <li key={category.id} className="px-4 py-2 hover:bg-gray-200">
-                                  <Link
-                                    href={`/category/${category.id}`}
-                                    className={`text-sm laptop:text-base ${
-                                      path.includes(category.id) ? "text-cyan-color" : "text-black"
-                                    }`}
-                                  >
-                                    {category.name}
-                                  </Link>
-                                </li>
-                              ))
-                            ) : (
-                              <li className="px-4 py-2">Loading...</li>
-                            )}
-                          </ul>
-                        )}
-                      </div>
+                      <Link
+                        href=""
+                        className="flex items-center gap-2 text-base laptop:text-lg"
+                      >
+                        <FaBars />
+                        Browse By Category
+                      </Link>
                     </li>
 
-                    {menuList.map((menu) => (
-                      <li key={menu.id}>
-                        <Link
-                          href={menu.url}
-                          className={`text-sm laptop:text-base ${path === menu.url ? "text-cyan-color" : "text-black"}`}
-                        >
-                          {menu.name}
-                        </Link>
-                      </li>
-                    ))}
+                    {categories.length > 0 &&
+                      categories.map((category, index) => (
+                        <li key={index}>
+                          <Link
+                            href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                            className={`text-sm laptop:text-base ${
+                              path.includes(category.toLowerCase().replace(/\s+/g, '-'))
+                                ? "text-cyan-color"
+                                : "text-black"
+                            }`}
+                          >
+                            {category}
+                          </Link>
+                        </li>
+                      ))}
                   </ul>
                 </div>
               </div>
