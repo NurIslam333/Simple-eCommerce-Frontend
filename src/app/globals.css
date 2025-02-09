@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Roboto", serif;
+  overflow-x: hidden;
+}
+
+input {
+  outline: none;
+  box-shadow: none;
+}
+
+a,
+button {
+  transition: all linear 0.2s;
+}
+
+/* banner-slider */
+.banner-slider .swiper-pagination-bullet {
+  width: 30px;
+  height: 5px;
+  border-radius: 100px;
+  background: #aa9393;
+  opacity: 100;
+}
+
+.banner-slider .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #034e53;
+}
+
+/* category */
+.category {
+  background: rgb(243, 237, 201);
+  background: linear-gradient(
+    351deg,
+    rgba(243, 237, 201, 1) 0%,
+    rgba(255, 255, 255, 1) 94%
+  );
+}
+
+@media (max-width: 767.98px) {
+  .banner-slider .swiper-pagination-bullet {
+    width: 15px;
+    height: 3px;
+  }
+
+  .swiper-button-prev:after,
+  .swiper-button-next:after {
+    font-size: 25px !important;
+  }
+}
