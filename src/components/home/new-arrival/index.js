@@ -10,7 +10,6 @@ import {
 } from "@/components/ui";
 
 export default function NewArrival() {
-
   const [itemList, setItemList] = useState([]);
 
   useEffect(() => {
@@ -44,13 +43,24 @@ export default function NewArrival() {
                   {data.title}
                 </H4>
 
-                <CustomImage
-                  src={data.image}
-                  alt={data.title}
-                  width="450"
-                  height="450"
-                  className="w-full"
-                />
+                {/* Fallback to standard <img> if CustomImage fails */}
+                {data.image ? (
+                  <CustomImage
+                    src={data.image}
+                    alt={data.title}
+                    width="450"
+                    height="450"
+                    className="w-full"
+                  />
+                ) : (
+                  <img
+                    src={data.image}
+                    alt={data.title}
+                    className="w-full"
+                    width="450"
+                    height="450"
+                  />
+                )}
 
                 <div className="text-sm flex items-center gap-2 mt-2">
                   <del className=" text-[#697475]">RS {data.oldPrice}</del>
