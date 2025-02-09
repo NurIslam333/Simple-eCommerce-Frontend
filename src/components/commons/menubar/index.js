@@ -1,12 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { CustomButton, CustomContainer, H4 } from "@/components/ui";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { RiCloseLargeFill } from "react-icons/ri";
 
 import { usePathname } from "next/navigation";
-import { FaBars, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import {
+  FaBars,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
 
 const menuList = [
   {
@@ -90,7 +96,7 @@ export default function Menubar() {
             <ul className="flex items-center gap-3 laptop:gap-7">
               {/* Browse By Category */}
               <li>
-              <div className="relative">
+                <div className="relative">
                   <CustomButton
                     onClick={handleCategoryToggle}
                     className="flex items-center gap-2 text-base laptop:text-lg"
@@ -100,14 +106,21 @@ export default function Menubar() {
                   </CustomButton>
                   {/* Dropdown Menu */}
                   {isCategoryOpen && (
-                    <ul className="absolute bg-white text-black py-2 mt-2 w-56 shadow-lg rounded-lg">
+                    <ul className="absolute bg-white text-black py-2 mt-2 w-56 shadow-lg rounded-lg z-[9999]">
                       {categories.length > 0 ? (
                         categories.map((category, index) => (
-                          <li key={index} className="px-4 py-2 hover:bg-gray-200">
+                          <li
+                            key={index}
+                            className="px-4 py-2 hover:bg-gray-200"
+                          >
                             <Link
-                              href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                              href={`/category/${category
+                                .toLowerCase()
+                                .replace(/\s+/g, "-")}`}
                               className={`text-sm laptop:text-base ${
-                                path.includes(category.toLowerCase().replace(/\s+/g, '-'))
+                                path.includes(
+                                  category.toLowerCase().replace(/\s+/g, "-")
+                                )
                                   ? "text-cyan-color"
                                   : "text-black"
                               }`}
@@ -128,7 +141,9 @@ export default function Menubar() {
                 <li key={menu.id}>
                   <Link
                     href={menu.url}
-                    className={`text-sm laptop:text-base ${path === menu.url ? "text-cyan-color" : "text-white"}`}
+                    className={`text-sm laptop:text-base ${
+                      path === menu.url ? "text-cyan-color" : "text-white"
+                    }`}
                   >
                     {menu.name}
                   </Link>
@@ -149,7 +164,10 @@ export default function Menubar() {
                   {/* Mobile Header */}
                   <div className="flex items-center justify-between">
                     <H4>Menu List</H4>
-                    <CustomButton className="text-red-600 text-2xl" onClick={handleCloseMobileMenu}>
+                    <CustomButton
+                      className="text-red-600 text-2xl"
+                      onClick={handleCloseMobileMenu}
+                    >
                       <RiCloseLargeFill />
                     </CustomButton>
                   </div>
@@ -169,9 +187,13 @@ export default function Menubar() {
                       categories.map((category, index) => (
                         <li key={index}>
                           <Link
-                            href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                            href={`/category/${category
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}`}
                             className={`text-sm laptop:text-base ${
-                              path.includes(category.toLowerCase().replace(/\s+/g, '-'))
+                              path.includes(
+                                category.toLowerCase().replace(/\s+/g, "-")
+                              )
                                 ? "text-cyan-color"
                                 : "text-black"
                             }`}
@@ -191,7 +213,10 @@ export default function Menubar() {
             <ul className="flex items-center gap-5">
               {socialLink.map((social) => (
                 <li key={social.id}>
-                  <Link href={social.url} className="text-xl hover:text-cyan-color">
+                  <Link
+                    href={social.url}
+                    className="text-xl hover:text-cyan-color"
+                  >
                     {social.name}
                   </Link>
                 </li>

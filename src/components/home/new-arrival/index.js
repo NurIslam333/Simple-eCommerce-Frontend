@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import {
   CustomButton,
   CustomContainer,
@@ -8,6 +7,7 @@ import {
   H4,
   H5,
 } from "@/components/ui";
+import { useEffect, useState } from "react";
 
 export default function NewArrival() {
   const [itemList, setItemList] = useState([]);
@@ -50,7 +50,7 @@ export default function NewArrival() {
                     alt={data.title}
                     width="450"
                     height="450"
-                    className="w-full"
+                    className="w-full tab:h-[200px] !object-contain"
                   />
                 ) : (
                   <img

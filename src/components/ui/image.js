@@ -13,6 +13,7 @@ export const CustomImage = ({
   height,
   quality = 80,
   fallback = null,
+  mainCSS ="h-auto",
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ export const CustomImage = ({
   };
 
   return (
-    <div className="relative w-auto h-auto">
+    <div className={`relative w-auto  ${mainCSS}`}>
       {isLoading && (
         <SkeletonTheme baseColor="#161421" highlightColor="#2B2740">
           <Skeleton

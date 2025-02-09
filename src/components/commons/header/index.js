@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
 import { CustomButton, CustomContainer, CustomImage } from "@/components/ui";
-import { BiSupport } from "react-icons/bi";
-import { IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { BiSupport } from "react-icons/bi";
 import { FaRegHeart, FaUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
+import { IoSearchOutline } from "react-icons/io5";
 import logo from "../../../../public/images/logo.png";
 
 export default function Header() {
